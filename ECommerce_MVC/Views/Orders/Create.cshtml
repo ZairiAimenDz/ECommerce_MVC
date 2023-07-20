@@ -1,0 +1,12 @@
+﻿@model Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<component type="typeof(ECommerce_MVC.Components.Admin.OrderCreationView)" render-mode="Server"
+           param-returnurl="@Url.Action("Index","Order")"/>
+<div class="my-3">
+    <a class="btn btn-success" asp-action="Index">Back to List</a>
+</div>

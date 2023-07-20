@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Orders List</h1>
+<form method="get" class="mb-2">
+    <input class="form-control" type="text"  placeholder="Copy The Order Code Here" name="OrderCode">
+    <button class="btn btn-warning p-2 rounded-lg mt-2" type="submit">Search</button>
+</form>
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<div class="p-2 my-2">
+    <div class="row border-bottom border-bottom-dark">
+        <div class="col-sm-3">
+            Buyer Details
+        </div>
+        <div class="col-sm-2">
+            Total
+        </div>
+        <div class="col-sm-3">
+            Order Code
+        </div>
+        <div class="col-sm-4">
+            Order State
+        </div>
+    </div>
+    @foreach (var order in Model)
+    {
+        <component type="typeof(ECommerce_MVC.Components.Admin.OrderManagement)" render-mode="Server"
+                   param-OrderId="@order.Id"
+                   param-Name="@order.BuyerDetails.ClientName"
+                   param-Total="@order.Total"
+                   param-BuyerId="@order.BuyerDetails.ID"
+                   param-state="@order.State"
+                   param-phone="@order.OrderPhone" />
+    }
+</div>

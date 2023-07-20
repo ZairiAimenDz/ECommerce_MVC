@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Constants.Website_Name</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/js/all.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <base href="~/" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/logos/@Constants.Website_Logo" height="48"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item flex-grow-1">
+                            <form method="get" asp-action="AllProducts">
+                                <input class="mr-sm-2 w-75" name="SearchTerm" type="text" placeholder="Search" aria-label="Search" style="border: none;
+                                border-radius: 12px 0 0 12px;padding: .375rem .75rem;
+                                font-size: 1rem;
+                                line-height: 1.5;
+                                color: #495057;
+                                background-color: #fff;
+                                background-clip: padding-box;">
+                                <button class="my-2 my-sm-0" type="submit" style="margin-left: -10px;border: none;border-radius: 0 12px 12px 0;background: orange;height: 35px;width: 30px;">
+                                    <i class="fas fa-search" style="font-size: 15px;color: gray;"></i>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="page-footer font-small blue pt-4">
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-md-2 mt-md-0 mt-3">
+                    <h5 class="text-uppercase">@Constants.Website_Name</h5>
+                </div>
+                <hr class="clearfix w-100 d-md-none pb-3">
+                <div class="col-md-3 mb-md-0 mb-3">
+                    <ul class="list-unstyled">
+                        <li>
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="AllProducts">Categories</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="AllProducts">All Products</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-3 mb-md-0 mb-3">
+                    <ul class="list-unstyled">
+                        <li>Email : @Constants.Email</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-md-0 mb-3">
+                    <div class="title">Check Us On Social Media</div>
+                    <div class="social-media mt-3">
+                        <a href=""><i class="fab fa-facebook"></i></a>
+                        <a href=""><i class="fab fa-instagram-square"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3">
+            © 2021 Copyright:
+            <a href="#"> @Constants.Website_Name .com</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="_framework/blazor.server.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

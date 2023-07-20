@@ -1,0 +1,50 @@
+﻿@model ECommerce_MVC.Wrappers.PagedList<Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdminLayout";
+}
+
+<h1>Products List :</h1>
+
+<form class="py-2">
+    <input class="form-control" name="searchterm"/>
+</form>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+
+<div class="row border-bottom border-bottom-dark p-2">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-3">Name</div>
+    <div class="col-sm-2">Price &amp; Condition</div>
+    <div class="col-sm-3">Brand &amp; Category</div>
+    <div class="col-sm-1">Number In Stock</div>
+    <div class="col-sm-2">Actions</div>
+</div>
+
+@foreach (var item in Model)
+{
+    <component type="typeof(ECommerce_MVC.Components.Admin.ProductManagement)"
+               render-mode="Server"
+               param-deleteurl="@Url.Action("Delete", "Products", new {item.ID})"
+               param-detailsurl="@Url.Action("Details", "Home", new {item.ID})"
+               param-id="@item.ID" param-Name="@item.Name"
+               param-ThumbnailUrl="@item.ThumbnailURL" param-Condition="@item.ProductCondition"
+               param-Price="@item.Price" param-BrandName="@item.Brand.Name"
+               param-CategoryName="@item.Category.Name" param-Numberinstock="@item.NumberInStock"
+               param-isvisible="@item.isVisible"
+               />
+}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">      
+        <li class="page-item @(Model.HasPrevious?"":"disabled")">
+            <a class="page-link" asp-route-pagenum="@(Model.PageNumber-1)">&laquo; Previous</a>
+        </li>
+        <li class="page-item @(Model.HasNext?"":"disabled")">
+            <a class="page-link" asp-route-pagenum="@(Model.PageNumber+1)">Next &raquo;</a>
+        </li>
+    </ul>
+</nav>

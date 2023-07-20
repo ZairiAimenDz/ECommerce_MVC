@@ -1,0 +1,99 @@
+﻿@model HomePageViewModel
+@using ECommerce_MVC.Dtos.Product
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container mb-5">
+    <div class="categories row" style="padding: 16px 0 16px 0;">
+        @foreach (var item in Model.RandomCategories)
+        {
+            <div class="col-sm-4 col-md-3 col-lg-2 col-6 p-2">
+                <div class="single-category h-100">
+                    <a class="h-100" href="@Url.Action("AllProducts",new ProductParameters() {Categoryid = item.Id})">
+                        <div class="single-category-icon p-3"><img height="64" src="/images/@item.CategoryImage" /></div>
+                        <div class="single-category-title">@item.Name</div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div id="carouselExampleControls" class="carousel slide mb-5" data-ride="carousel">
+    <div class="carousel-inner">
+        @if (Model.Announcements.Count() >= 1)
+        {
+            <div class="carousel-item active">
+                <a href="@Model.Announcements.First().Link">
+                    <img src="/images/@Model.Announcements.First().Image" class="d-block w-100" alt="...">
+                </a>
+            </div>
+        }
+        @foreach (var item in Model.Announcements.Skip(1))
+        {
+            <div class="carousel-item">
+                <a href="@item.Link">
+                    <img src="/images/@item.Image" class="d-block w-100" alt="...">
+                </a>
+            </div>
+        }
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+
+<div class="mb-3" style="display:flex;">
+    <h3 class="flex-grow-1">Top Selling Products</h3>
+    <a class="text-right" asp-controller="Home" asp-action="AllProducts">View All</a>
+</div>
+<div class="mb-5" style="display: grid;grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));">
+    @foreach (var item in Model.RandomProducts.Take(4))
+    {
+        <component type="typeof(ECommerce_MVC.Components.Shared.ProductCard)" render-mode="ServerPrerendered"
+                   param-name='@item.Name' param-price="@item.Price" param-oldprice="@item.OldPrice"
+                   param-ProductImgURL='@(Url.Content("~/images/"+item.ThumbnailURL))' param-id='@item.ID'
+                   param-Category='@item.Category.Name' param-ProductBrand='@item.Brand.Name'
+                   param-Description='@item.ShortDescription' />
+    }
+</div>
+
+
+<div class="mb-3" style="display:flex;">
+    <h3 class="flex-grow-1">Latest Added</h3>
+    <a class="text-right" asp-controller="Home" asp-action="AllProducts">View All</a>
+</div>
+<div class="mb-5" style="display: grid;grid-template-columns: repeat(auto-fit, minmax(min(100%, 17em), 1fr));">
+    @foreach (var item in Model.LatestProducts.Take(4))
+    {
+        <component type="typeof(ECommerce_MVC.Components.Shared.ProductCard)" render-mode="ServerPrerendered"
+                   param-name='@item.Name' param-price="@item.Price" param-oldprice="@item.OldPrice"
+                   param-ProductImgURL='@(Url.Content("~/images/"+item.ThumbnailURL))' param-id='@item.ID'
+                   param-Category='@item.Category.Name' param-ProductBrand='@item.Brand.Name'
+                   param-Description='@item.ShortDescription' />
+    }
+</div>
+
+
+<div class="text-center">
+    <h1 class="display-4 mb-3">Brands</h1>
+    <div class="row">
+        @foreach (var brand in Model.Brands)
+        {
+            <div class="col-sm-1">
+                <a href="@Url.Action("AllProducts",new ProductParameters() {BrandId = brand.Id })">
+                    <img class="w-100" src="/images/@brand.BrandImage" />
+                </a>
+            </div>
+        }
+    </div>
+</div>
